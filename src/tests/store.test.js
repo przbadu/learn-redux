@@ -1,5 +1,4 @@
-/* import store from "./../store.js";*/
-const counter = require("./../store");
+import { store, counter } from "./../store";
 
 describe("store", () => {
   it("should should return 1", () => {
@@ -36,5 +35,34 @@ describe("store", () => {
     expect(
       counter(undefined, {})
     ).toBe(0)
+  });
+
+  it('store should return initial state', () => {
+    expect(
+      store.getState()
+    ).toBe(0)
+  });
+
+  it('should dispatch action', () => {
+    /* for initial state*/
+    // state = 0
+    store.dispatch({type: 'INCREMENT'});
+    expect(store.getState()).toBe(1)
+
+    // state = 1
+    store.dispatch({type: 'INCREMENT'});
+    expect(store.getState()).toBe(2);
+
+    // state = 2
+    store.dispatch({type: 'DECREMENT'});
+    expect(store.getState()).toBe(1)
+
+    // state = 1
+    store.dispatch({type: 'unknown'});
+    expect(store.getState()).toBe(1)
+
+    // state = 1
+    store.dispatch({type: 'DECREMENT'});
+    expect(store.getState()).toBe(0)
   });
 });
